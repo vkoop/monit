@@ -2,6 +2,7 @@ package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -36,7 +37,8 @@ public class HealthMailReporter implements HealthReporter {
                     return accum;
                 }).toObservable());
 
-        hashMapObservable.subscribe(this::reportAll);
+        hashMapObservable.subscribeOn(Schedulers.io())
+                .subscribe(this::reportAll);
     }
 
     @Override

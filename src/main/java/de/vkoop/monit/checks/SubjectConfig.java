@@ -14,7 +14,7 @@ public class SubjectConfig {
 
     @Scope("singleton")
     @Bean
-    public Subject<Map<String, HealthCheck.Result>> checkSubject(){
+    public Subject<Map<String, HealthCheck.Result>> checkSubject() {
         Subject<Map<String, HealthCheck.Result>> subject = PublishSubject.create();
         subject.publish();
 

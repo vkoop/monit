@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
-import java.util.Set;
 
 @Component
 public class HealthConsoleReporter implements HealthReporter {
@@ -16,7 +15,7 @@ public class HealthConsoleReporter implements HealthReporter {
     Subject<Map<String, HealthCheck.Result>> checkSubject;
 
     @PostConstruct
-    public void onInit(){
+    public void onInit() {
         checkSubject.subscribe(this::reportAll);
     }
 
