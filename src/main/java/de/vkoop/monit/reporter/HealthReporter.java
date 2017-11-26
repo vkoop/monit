@@ -2,11 +2,12 @@ package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
 
-import java.util.SortedMap;
+import java.util.Map;
+import java.util.Set;
 
 public interface HealthReporter {
 
-    void reportAll(SortedMap<String, HealthCheck.Result> results);
+    void reportAll(Set<Map.Entry<String, HealthCheck.Result>> results);
 
 
 }

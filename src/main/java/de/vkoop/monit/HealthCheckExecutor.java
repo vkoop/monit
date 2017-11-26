@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 
 @Component
@@ -22,9 +24,10 @@ public class HealthCheckExecutor {
     @Scheduled(fixedRateString = "${health.checkrate}")
     public void check() {
         SortedMap<String, HealthCheck.Result> entries = healthCheckRegistry.runHealthChecks();
+        Set<Map.Entry<String, HealthCheck.Result>> results = entries.entrySet();
 
         for (HealthReporter reporter : reporters) {
-            reporter.reportAll(entries);
+            reporter.reportAll(results);
         }
     }
 }

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.SortedMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,9 +22,9 @@ public class HealthMailReporter implements HealthReporter {
     MailConfig mailConfig;
 
     @Override
-    public void reportAll(SortedMap<String, HealthCheck.Result> results) {
+    public void reportAll(Set<Map.Entry<String, HealthCheck.Result>> results) {
 
-        String unhealthyEntries = results.entrySet().stream()
+        String unhealthyEntries = results.stream()
                 .filter(entry -> !entry.getValue().isHealthy())
                 .map(entry -> entry.getKey() + " failed")
                 .collect(Collectors.joining("\n"));
