@@ -34,6 +34,9 @@ dependencies {
 	compile('io.dropwizard.metrics:metrics-core:3.2.2')
 	compile('io.dropwizard.metrics:metrics-healthchecks:3.2.2')
 	compile "org.springframework.boot:spring-boot-configuration-processor"
+
+	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.6'
+
 }
 
 compileJava.dependsOn(processResources)
