@@ -36,8 +36,8 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
         String collect = results.entrySet().stream()
-                .filter(x -> !x.getValue().isHealthy())
-                .map(x -> x.getKey() + " unhealthy")
+                .filter(tuple -> !tuple.getValue().isHealthy())
+                .map(tuple -> tuple.getKey() + " unhealthy")
                 .collect(Collectors.joining("\n"));
 
         SendMessage sendMessage = new SendMessage();
