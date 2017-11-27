@@ -37,6 +37,11 @@ dependencies {
 
 	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.6'
 
+	compile "org.telegram:telegrambots:3.5"
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
+	compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.2.Final'
+
+
 }
 
 compileJava.dependsOn(processResources)

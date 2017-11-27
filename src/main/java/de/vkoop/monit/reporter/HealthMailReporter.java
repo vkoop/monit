@@ -5,6 +5,7 @@ import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+@Profile("mail")
 @Component
 public class HealthMailReporter implements HealthReporter {
 
@@ -27,17 +29,11 @@ public class HealthMailReporter implements HealthReporter {
     MailConfig mailConfig;
 
     @Autowired
-    Subject<Map<String, HealthCheck.Result>> checkSubject;
+    Observable<Map<String, HealthCheck.Result>> windowedCheckSubject;
 
     @PostConstruct
     public void onInit() {
-        Observable<HashMap<String, HealthCheck.Result>> hashMapObservable = checkSubject.window(30, TimeUnit.MINUTES).
-                flatMap(obs -> obs.reduce(new HashMap<String, HealthCheck.Result>(), (accum, curr) -> {
-                    accum.putAll(curr);
-                    return accum;
-                }).toObservable());
-
-        hashMapObservable.subscribeOn(Schedulers.io())
+        windowedCheckSubject.subscribeOn(Schedulers.io())
                 .subscribe(this::reportAll);
     }
 
