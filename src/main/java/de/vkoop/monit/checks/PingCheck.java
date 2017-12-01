@@ -12,11 +12,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PingCheck extends NamedHealthCheck {
 
-    @NonNull
     private final String ip;
-    @NonNull
     private final PingCommandStrategy pingCommandStrategy;
-    @NonNull
     private final String name;
 
     @Override

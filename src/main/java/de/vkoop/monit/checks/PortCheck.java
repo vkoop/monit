@@ -1,7 +1,10 @@
 package de.vkoop.monit.checks;
 
+import lombok.RequiredArgsConstructor;
+
 import java.net.Socket;
 
+@RequiredArgsConstructor
 public class PortCheck extends NamedHealthCheck {
 
     public final int port;
@@ -16,12 +19,6 @@ public class PortCheck extends NamedHealthCheck {
         } catch (Exception e) {
             return Result.unhealthy(e);
         }
-    }
-
-    public PortCheck(int port, String host, String name) {
-        this.port = port;
-        this.host = host;
-        this.name = name;
     }
 
     @Override
