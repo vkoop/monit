@@ -27,12 +27,11 @@ public class SubjectConfig {
     @Scope("singleton")
     @Bean
     public Observable<Map<String, HealthCheck.Result>> windowedCheckSubject(Subject<Map<String, HealthCheck.Result>> checkSubject) {
-        Observable<Map<String, HealthCheck.Result>> hashMapObservable = checkSubject.window(30, TimeUnit.MINUTES).
+
+        return checkSubject.window(30, TimeUnit.MINUTES).
                 flatMap(obs -> obs.reduce(new HashMap<String, HealthCheck.Result>(), (accum, curr) -> {
                     accum.putAll(curr);
                     return accum;
                 }).toObservable());
-
-        return hashMapObservable;
     }
 }
