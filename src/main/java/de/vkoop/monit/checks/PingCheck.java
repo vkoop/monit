@@ -1,5 +1,7 @@
 package de.vkoop.monit.checks;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -7,18 +9,15 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class PingCheck extends NamedHealthCheck {
 
-    private final PingCommandStrategy pingCommandStrategy;
-
+    @NonNull
     private final String ip;
+    @NonNull
+    private final PingCommandStrategy pingCommandStrategy;
+    @NonNull
     private final String name;
-
-    public PingCheck(String ip, PingCommandStrategy pingCommandStrategy, String name) {
-        this.ip = ip;
-        this.pingCommandStrategy = pingCommandStrategy;
-        this.name = name;
-    }
 
     @Override
     protected Result check() {
