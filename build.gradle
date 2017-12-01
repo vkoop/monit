@@ -12,6 +12,8 @@ buildscript {
 
 plugins {
 	id 'org.springframework.boot' version '1.5.8.RELEASE'
+	id 'io.franzbecker.gradle-lombok' version '1.11'
+	id 'java'
 }
 
 apply plugin: 'java'
@@ -27,21 +29,15 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-mail')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile('io.dropwizard.metrics:metrics-core:3.2.2')
 	compile('io.dropwizard.metrics:metrics-healthchecks:3.2.2')
 	compile "org.springframework.boot:spring-boot-configuration-processor"
-
 	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.6'
-
 	compile "org.telegram:telegrambots:3.5"
-	// https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
 	compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.2.Final'
-
-
 }
 
 compileJava.dependsOn(processResources)
