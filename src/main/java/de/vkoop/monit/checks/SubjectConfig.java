@@ -7,10 +7,12 @@ import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 import io.vavr.Tuple2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+@Slf4j
 @Configuration
 public class SubjectConfig {
 
@@ -33,6 +35,14 @@ public class SubjectConfig {
     @Bean
     public Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled(Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot, Filter<String> filter) {
         return checkObservableHot
+                .doOnNext(tuple -> {
+                    boolean healthy = tuple._2.isHealthy();
+                    String name = tuple._1;
+                    if(healthy && filter.restore(name)){
+                        //TODO
+                        log.info("Restored service: {}", name);
+                    }
+                })
                 .filter(tuple -> !tuple._2.isHealthy())
                 .filter(i -> filter.filter(i._1));
     }

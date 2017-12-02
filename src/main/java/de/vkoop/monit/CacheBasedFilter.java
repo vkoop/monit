@@ -30,4 +30,15 @@ public class CacheBasedFilter<T> implements Filter<T> {
 
         return isNew;
     }
+
+    @Override
+    public boolean restore(T t) {
+        T item = cache.getIfPresent(t);
+        if(item != null){
+            cache.invalidate(t);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

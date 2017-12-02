@@ -4,11 +4,13 @@ import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
 import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
+@Profile("console")
 @Component
 public class HealthConsoleReporter implements HealthReporter {
 
