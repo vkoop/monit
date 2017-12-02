@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
+import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
@@ -25,11 +26,11 @@ import java.util.stream.Collectors;
 public class HealthTelegramReporter extends TelegramLongPollingBot implements HealthReporter {
 
     @Autowired
-    Observable<Map<String, HealthCheck.Result>> windowedCheckSubject;
+    Observable<Map<String, HealthCheck.Result>> windowedUnhealthy;
 
     @PostConstruct
     public void onInit() {
-        windowedCheckSubject.subscribeOn(Schedulers.io())
+        windowedUnhealthy.subscribeOn(Schedulers.io())
                 .subscribe(this::reportAll);
     }
 
@@ -49,16 +50,34 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
+            //TODO
             e.printStackTrace();
         }
+    }
 
+    //TODO
+    @Override
+    public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
+
+        String text = resultTuple.toString();
+
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setText(text);
+
+        //TODO move to config
+        sendMessage.setChatId(9464296L);
+
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            //TODO
+            e.printStackTrace();
+        }
     }
 
 
     @Override
-    public void onUpdateReceived(Update update) {
-
-    }
+    public void onUpdateReceived(Update update) { }
 
     @Override
     public String getBotUsername() {
@@ -71,7 +90,5 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     }
 
     @Override
-    public void clearWebhook() throws TelegramApiRequestException {
-
-    }
+    public void clearWebhook() { }
 }

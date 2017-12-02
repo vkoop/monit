@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
+import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -29,28 +30,36 @@ public class HealthMailReporter implements HealthReporter {
     MailConfig mailConfig;
 
     @Autowired
-    Observable<Map<String, HealthCheck.Result>> windowedCheckSubject;
+    Observable<Map<String, HealthCheck.Result>> windowedUnhealthy;
 
     @PostConstruct
     public void onInit() {
-        windowedCheckSubject.subscribeOn(Schedulers.io())
+        windowedUnhealthy.subscribeOn(Schedulers.io())
                 .subscribe(this::reportAll);
     }
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
         String unhealthyEntries = results.entrySet().stream()
-                .filter(entry -> !entry.getValue().isHealthy())
                 .map(entry -> entry.getKey() + " failed")
                 .collect(Collectors.joining("\n"));
 
+        sendMail(unhealthyEntries);
+    }
+
+    @Override
+    public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
+        sendMail(resultTuple._1 + " failed");
+    }
+
+    private void sendMail(String mailText) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
         try {
             mimeMessageHelper.setFrom(mailConfig.fromMail);
             mimeMessageHelper.setTo(mailConfig.toEmail);
             mimeMessageHelper.setSubject("Report");
-            mimeMessageHelper.setText(unhealthyEntries, false);
+            mimeMessageHelper.setText(mailText, false);
 
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {

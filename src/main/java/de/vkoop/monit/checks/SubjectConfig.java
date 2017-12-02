@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
+import io.vavr.Tuple2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -17,21 +18,30 @@ public class SubjectConfig {
 
     @Scope("singleton")
     @Bean
-    public Subject<Map<String, HealthCheck.Result>> checkSubject() {
-        Subject<Map<String, HealthCheck.Result>> subject = PublishSubject.create();
-        subject.publish();
-
-        return subject;
+    public Subject<Tuple2<String, HealthCheck.Result>> checkSubject() {
+        return PublishSubject.create();
     }
 
     @Scope("singleton")
     @Bean
-    public Observable<Map<String, HealthCheck.Result>> windowedCheckSubject(Subject<Map<String, HealthCheck.Result>> checkSubject) {
+    public Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot(Subject<Tuple2<String, HealthCheck.Result>> checkSubject) {
+        return checkSubject.publish();
+    }
 
-        return checkSubject.window(30, TimeUnit.MINUTES).
+    @Scope("singleton")
+    @Bean
+    public Observable<Map<String, HealthCheck.Result>> windowedCheckSubject(Observable<Tuple2<String, HealthCheck.Result>> checkSubject) {
+        return checkSubject.window(30, TimeUnit.SECONDS).
                 flatMap(obs -> obs.reduce(new HashMap<String, HealthCheck.Result>(), (accum, curr) -> {
-                    accum.putAll(curr);
+                    accum.put(curr._1, curr._2);
                     return accum;
                 }).toObservable());
+    }
+
+    @Scope("singleton")
+    @Bean
+    public Observable<Map<String, HealthCheck.Result>> windowedUnhealthy(Observable<Tuple2<String, HealthCheck.Result>> checkSubject){
+        Observable<Tuple2<String, HealthCheck.Result>> filteredObs = checkSubject.filter(tuple -> !tuple._2.isHealthy());
+        return windowedCheckSubject(filteredObs);
     }
 }

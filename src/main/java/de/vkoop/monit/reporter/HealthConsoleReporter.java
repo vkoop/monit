@@ -2,6 +2,7 @@ package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.subjects.Subject;
+import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,15 +13,20 @@ import java.util.Map;
 public class HealthConsoleReporter implements HealthReporter {
 
     @Autowired
-    Subject<Map<String, HealthCheck.Result>> checkSubject;
+    Subject<Tuple2<String, HealthCheck.Result>> checkSubject;
 
     @PostConstruct
     public void onInit() {
-        checkSubject.subscribe(this::reportAll);
+        checkSubject.subscribe(this::reportSingle);
     }
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
         System.out.println(results);
+    }
+
+    @Override
+    public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
+        System.out.println(resultTuple);
     }
 }
