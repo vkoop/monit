@@ -5,6 +5,7 @@ import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -13,6 +14,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,9 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
 
     @Autowired
     Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled;
+
+    @Value("#{ '${telegram.recipients}'.split(',') }")
+    List<Long> recipients;
 
     @PostConstruct
     public void onInit() {
@@ -35,21 +40,28 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
                 .map(tuple -> tuple.getKey() + " unhealthy")
                 .collect(Collectors.joining("\n"));
 
-        sendMessage(collect);
+        sendMessageToAll(collect);
     }
 
     @Override
     public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
         String text = resultTuple.toString();
-        sendMessage(text);
+        sendMessageToAll(text);
     }
 
-    private void sendMessage(String text) {
+    private void sendMessageToAll(String text){
+        for (Long recipient : recipients) {
+            sendMessage(text, recipient);
+        }
+    }
+
+    private void sendMessage(String text, long chatId) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setText(text);
 
         //TODO move to config
-        sendMessage.setChatId(9464296L);
+        sendMessage.setChatId(chatId);
+
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
