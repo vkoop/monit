@@ -1,6 +1,8 @@
 package de.vkoop.monit.checks;
 
 import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.CacheBasedFilter;
+import de.vkoop.monit.Filter;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -36,6 +38,19 @@ public class SubjectConfig {
                     accum.put(curr._1, curr._2);
                     return accum;
                 }).toObservable());
+    }
+
+    @Scope("singleton")
+    @Bean
+    public Filter<String> throttleFilter(){
+        return new CacheBasedFilter<>();
+    }
+
+    @Scope("singleton")
+    @Bean
+    public Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled(  Observable<Tuple2<String, HealthCheck.Result>> checkSubject, Filter<String>filter){
+        return checkSubject.filter( i -> filter.filter(i._1))
+                .filter(tuple -> !tuple._2.isHealthy());
     }
 
     @Scope("singleton")

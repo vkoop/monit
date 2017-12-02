@@ -27,12 +27,12 @@ public class HealthMailReporter implements HealthReporter {
     MailConfig mailConfig;
 
     @Autowired
-    Observable<Map<String, HealthCheck.Result>> windowedUnhealthy;
+    Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled;
 
     @PostConstruct
     public void onInit() {
-        windowedUnhealthy.subscribeOn(Schedulers.io())
-                .subscribe(this::reportAll);
+        unhealthyThrottled.subscribeOn(Schedulers.io())
+                .subscribe(this::reportSingle);
     }
 
     @Override

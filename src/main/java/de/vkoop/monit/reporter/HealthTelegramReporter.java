@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 public class HealthTelegramReporter extends TelegramLongPollingBot implements HealthReporter {
 
     @Autowired
-    Observable<Map<String, HealthCheck.Result>> windowedUnhealthy;
+    Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled;
 
     @PostConstruct
     public void onInit() {
-        windowedUnhealthy.subscribeOn(Schedulers.io())
-                .subscribe(this::reportAll);
+        unhealthyThrottled.subscribeOn(Schedulers.io())
+                .subscribe(this::reportSingle);
     }
 
     @Override
@@ -36,6 +36,12 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
                 .collect(Collectors.joining("\n"));
 
         sendMessage(collect);
+    }
+
+    @Override
+    public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
+        String text = resultTuple.toString();
+        sendMessage(text);
     }
 
     private void sendMessage(String text) {
@@ -52,14 +58,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
         }
     }
 
-    //TODO
-    @Override
-    public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
 
-        String text = resultTuple.toString();
-
-        sendMessage(text);
-    }
 
 
     @Override
