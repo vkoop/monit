@@ -3,22 +3,17 @@ package de.vkoop.monit.reporter;
 import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.Subject;
 import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
-import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Profile("telegram")
@@ -40,12 +35,15 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
                 .map(tuple -> tuple.getKey() + " unhealthy")
                 .collect(Collectors.joining("\n"));
 
+        sendMessage(collect);
+    }
+
+    private void sendMessage(String text) {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setText(collect);
+        sendMessage.setText(text);
 
         //TODO move to config
         sendMessage.setChatId(9464296L);
-
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
@@ -60,23 +58,13 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
 
         String text = resultTuple.toString();
 
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setText(text);
-
-        //TODO move to config
-        sendMessage.setChatId(9464296L);
-
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            //TODO
-            e.printStackTrace();
-        }
+        sendMessage(text);
     }
 
 
     @Override
-    public void onUpdateReceived(Update update) { }
+    public void onUpdateReceived(Update update) {
+    }
 
     @Override
     public String getBotUsername() {
@@ -89,5 +77,6 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     }
 
     @Override
-    public void clearWebhook() { }
+    public void clearWebhook() {
+    }
 }

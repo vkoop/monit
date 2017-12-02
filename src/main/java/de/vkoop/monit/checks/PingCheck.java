@@ -1,6 +1,5 @@
 package de.vkoop.monit.checks;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

@@ -40,7 +40,7 @@ public class SubjectConfig {
 
     @Scope("singleton")
     @Bean
-    public Observable<Map<String, HealthCheck.Result>> windowedUnhealthy(Observable<Tuple2<String, HealthCheck.Result>> checkSubject){
+    public Observable<Map<String, HealthCheck.Result>> windowedUnhealthy(Observable<Tuple2<String, HealthCheck.Result>> checkSubject) {
         Observable<Tuple2<String, HealthCheck.Result>> filteredObs = checkSubject.filter(tuple -> !tuple._2.isHealthy());
         return windowedCheckSubject(filteredObs);
     }
