@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @ConfigurationProperties
-public class MyConfigProperties {
+public class AppProperties {
 
     public List<MyConfigEntry> myhosts;
 

@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@EnableConfigurationProperties(MyConfigProperties.class)
+@EnableConfigurationProperties(AppProperties.class)
 @Configuration
 public class PingCheckConfigs {
 
     @Bean
-    public List<NamedHealthCheck> pingChecks(MyConfigProperties hostConfig, PingCheck.PingCommandStrategy pingCommandStrategy) {
+    public List<NamedHealthCheck> pingChecks(AppProperties hostConfig, PingCheck.PingCommandStrategy pingCommandStrategy) {
         return hostConfig.myhosts.stream()
                 .filter(conf -> conf.port == 0)
                 .map(conf -> new PingCheck(conf.ip, pingCommandStrategy, conf.name))
