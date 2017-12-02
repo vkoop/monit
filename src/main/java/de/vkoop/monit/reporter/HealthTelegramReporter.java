@@ -49,7 +49,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
         sendMessageToAll(text);
     }
 
-    private void sendMessageToAll(String text){
+    private void sendMessageToAll(String text) {
         for (Long recipient : recipients) {
             sendMessage(text, recipient);
         }

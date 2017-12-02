@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableConfigurationProperties
 @ConfigurationProperties("mailconfig")
-public class MailConfig {
+public class MailProperties {
     String fromMail;
     public String toEmail;
 }

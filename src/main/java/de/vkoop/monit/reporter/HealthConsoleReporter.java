@@ -2,7 +2,6 @@ package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
-import io.reactivex.subjects.Subject;
 import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

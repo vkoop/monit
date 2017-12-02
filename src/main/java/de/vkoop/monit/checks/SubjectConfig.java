@@ -32,7 +32,8 @@ public class SubjectConfig {
     @Scope("prototype")
     @Bean
     public Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled(Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot, Filter<String> filter) {
-        return checkObservableHot.filter(i -> filter.filter(i._1))
-                .filter(tuple -> !tuple._2.isHealthy());
+        return checkObservableHot
+                .filter(tuple -> !tuple._2.isHealthy())
+                .filter(i -> filter.filter(i._1));
     }
 }

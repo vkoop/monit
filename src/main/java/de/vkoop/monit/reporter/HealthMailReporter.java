@@ -24,7 +24,7 @@ public class HealthMailReporter implements HealthReporter {
     JavaMailSender mailSender;
 
     @Autowired
-    MailConfig mailConfig;
+    MailProperties mailConfig;
 
     @Autowired
     Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled;
