@@ -38,7 +38,7 @@ public class HealthMailReporter implements HealthReporter {
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
         String unhealthyEntries = results.entrySet().stream()
-                .map(entry -> entry.getKey() + " failed")
+                .map(Object::toString)
                 .collect(Collectors.joining("\n"));
 
         sendMail(unhealthyEntries);
@@ -46,7 +46,7 @@ public class HealthMailReporter implements HealthReporter {
 
     @Override
     public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
-        sendMail(resultTuple._1 + " failed");
+        sendMail(resultTuple.toString());
     }
 
     private void sendMail(String mailText) {

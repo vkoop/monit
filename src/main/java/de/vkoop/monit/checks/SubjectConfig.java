@@ -1,7 +1,6 @@
 package de.vkoop.monit.checks;
 
 import com.codahale.metrics.health.HealthCheck;
-import de.vkoop.monit.CacheBasedFilter;
 import de.vkoop.monit.Filter;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -24,12 +23,6 @@ public class SubjectConfig {
     @Bean
     public Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot(Subject<Tuple2<String, HealthCheck.Result>> checkSubject) {
         return checkSubject.publish();
-    }
-
-    @Scope("singleton")
-    @Bean
-    public Filter<String> throttleFilter() {
-        return new CacheBasedFilter<>();
     }
 
     @Scope("singleton")
