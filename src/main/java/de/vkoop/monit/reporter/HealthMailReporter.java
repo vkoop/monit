@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,6 +17,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Profile("mail")
 @Component
 public class HealthMailReporter implements HealthReporter {
@@ -46,6 +48,8 @@ public class HealthMailReporter implements HealthReporter {
 
     @Override
     public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
+        log.debug("sending mail {}", resultTuple._1);
+
         sendMail(resultTuple.toString());
     }
 

@@ -4,6 +4,8 @@ import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Profile("telegram")
 @Component
 public class HealthTelegramReporter extends TelegramLongPollingBot implements HealthReporter {
@@ -56,6 +59,8 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     }
 
     private void sendMessage(String text, long chatId) {
+        log.debug("sending message to chat {}", chatId);
+
         SendMessage sendMessage = new SendMessage();
         sendMessage.setText(text);
 
