@@ -13,15 +13,14 @@ public class CacheBasedFilter<T> implements Filter<T> {
             .build();
 
     @Override
-    public boolean filter(T t){
-        boolean isNew =  cache.getIfPresent(t) == null;
-        if(isNew){
-            cache.put(t,t);
+    public boolean filter(T t) {
+        boolean isNew = cache.getIfPresent(t) == null;
+        if (isNew) {
+            cache.put(t, t);
         }
 
         return isNew;
     }
-
 
 
 }

@@ -59,8 +59,6 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     }
 
 
-
-
     @Override
     public void onUpdateReceived(Update update) {
     }
