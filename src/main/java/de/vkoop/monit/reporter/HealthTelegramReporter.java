@@ -31,6 +31,9 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     @Value("#{ '${telegram.recipients}'.split(',') }")
     List<Long> recipients;
 
+    @Value("${telegram.authtoken}")
+    private String authToken;
+
     @PostConstruct
     public void onInit() {
         unhealthyThrottled.subscribeOn(Schedulers.io())
@@ -87,7 +90,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
 
     @Override
     public String getBotToken() {
-        return "409312434:AAGZsRDk7sqiVZnyeLIruj6wTJk5f7uAKA8";
+        return authToken;
     }
 
     @Override
