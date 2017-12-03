@@ -9,4 +9,6 @@ public interface HealthReporter {
     void reportAll(Map<String, HealthCheck.Result> results);
 
     void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple);
+
+    void onRestore(String key);
 }

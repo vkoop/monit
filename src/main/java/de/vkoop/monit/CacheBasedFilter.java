@@ -34,7 +34,7 @@ public class CacheBasedFilter<T> implements Filter<T> {
     @Override
     public boolean restore(T t) {
         T item = cache.getIfPresent(t);
-        if(item != null){
+        if (item != null) {
             cache.invalidate(t);
             return true;
         } else {

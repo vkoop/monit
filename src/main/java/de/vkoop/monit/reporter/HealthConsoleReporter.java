@@ -31,4 +31,9 @@ public class HealthConsoleReporter implements HealthReporter {
     public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
         System.out.println(resultTuple);
     }
+
+    @Override
+    public void onRestore(String key) {
+        System.out.println("Restored: " + key);
+    }
 }

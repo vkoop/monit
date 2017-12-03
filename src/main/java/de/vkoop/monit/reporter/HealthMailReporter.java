@@ -1,8 +1,8 @@
 package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.Filter;
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Map;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Profile("mail")
 @Component
-public class HealthMailReporter implements HealthReporter {
+public class HealthMailReporter implements HealthReporter, FilteredReporter, FailReporter {
 
     @Autowired
     JavaMailSender mailSender;
@@ -29,13 +28,10 @@ public class HealthMailReporter implements HealthReporter {
     MailProperties mailConfig;
 
     @Autowired
-    Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled;
+    Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
 
-    @PostConstruct
-    public void onInit() {
-        unhealthyThrottled.subscribeOn(Schedulers.io())
-                .subscribe(this::reportSingle);
-    }
+    @Autowired
+    Filter<String> filterByName;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
@@ -53,6 +49,11 @@ public class HealthMailReporter implements HealthReporter {
         sendMail(resultTuple.toString());
     }
 
+    @Override
+    public void onRestore(String key) {
+        sendMail("restored: " + key);
+    }
+
     private void sendMail(String mailText) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -66,5 +67,15 @@ public class HealthMailReporter implements HealthReporter {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Filter<String> getFilter() {
+        return filterByName;
+    }
+
+    @Override
+    public Observable<Tuple2<String, HealthCheck.Result>> getObservable() {
+        return checkObservableHot;
     }
 }

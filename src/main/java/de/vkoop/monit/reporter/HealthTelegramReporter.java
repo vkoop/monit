@@ -1,10 +1,9 @@
 package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.Filter;
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,6 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,10 +21,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Profile("telegram")
 @Component
-public class HealthTelegramReporter extends TelegramLongPollingBot implements HealthReporter {
+public class HealthTelegramReporter extends TelegramLongPollingBot implements HealthReporter, FilteredReporter, FailReporter {
 
     @Autowired
-    Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled;
+    Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
 
     @Value("#{ '${telegram.recipients}'.split(',') }")
     List<Long> recipients;
@@ -34,11 +32,8 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     @Value("${telegram.authtoken}")
     private String authToken;
 
-    @PostConstruct
-    public void onInit() {
-        unhealthyThrottled.subscribeOn(Schedulers.io())
-                .subscribe(this::reportSingle);
-    }
+    @Autowired
+    Filter<String> filterByName;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
@@ -55,6 +50,21 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
         sendMessageToAll(text);
     }
 
+    @Override
+    public Filter<String> getFilter() {
+        return filterByName;
+    }
+
+    @Override
+    public Observable<Tuple2<String, HealthCheck.Result>> getObservable() {
+        return checkObservableHot;
+    }
+
+    @Override
+    public void onRestore(String key) {
+        sendMessageToAll("Restored: " + key);
+    }
+
     private void sendMessageToAll(String text) {
         for (Long recipient : recipients) {
             sendMessage(text, recipient);
@@ -66,15 +76,12 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setText(text);
-
-        //TODO move to config
         sendMessage.setChatId(chatId);
 
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
-            //TODO
-            e.printStackTrace();
+            log.error("Failed to send message", e);
         }
     }
 

@@ -1,7 +1,6 @@
 package de.vkoop.monit.checks;
 
 import com.codahale.metrics.health.HealthCheck;
-import de.vkoop.monit.Filter;
 import io.reactivex.Observable;
 import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.subjects.PublishSubject;
@@ -31,19 +30,4 @@ public class SubjectConfig {
         return publish;
     }
 
-    @Scope("prototype")
-    @Bean
-    public Observable<Tuple2<String, HealthCheck.Result>> unhealthyThrottled(Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot, Filter<String> filter) {
-        return checkObservableHot
-                .doOnNext(tuple -> {
-                    boolean healthy = tuple._2.isHealthy();
-                    String name = tuple._1;
-                    if(healthy && filter.restore(name)){
-                        //TODO
-                        log.info("Restored service: {}", name);
-                    }
-                })
-                .filter(tuple -> !tuple._2.isHealthy())
-                .filter(i -> filter.filter(i._1));
-    }
 }
