@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Health check to check if ip is reachable.
+ */
 @RequiredArgsConstructor
 public class PingCheck extends NamedHealthCheck {
 

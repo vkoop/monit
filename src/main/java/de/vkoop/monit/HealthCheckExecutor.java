@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.SortedMap;
 
+/**
+ * Executes all health checks contained
+ * in the health check registry.
+ */
 @Component
 public class HealthCheckExecutor {
 

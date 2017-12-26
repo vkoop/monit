@@ -1,7 +1,7 @@
 package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
-import de.vkoop.monit.Filter;
+import de.vkoop.monit.StatefulFilter;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 
 public interface FilteredReporter {
 
-    Filter<String> getFilter();
+    StatefulFilter<String> getFilter();
 
     Observable<Tuple2<String, HealthCheck.Result>> getObservable();
 

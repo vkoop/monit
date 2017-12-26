@@ -1,4 +1,4 @@
-package de.vkoop.monit.config;
+package de.vkoop.monit.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

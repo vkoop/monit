@@ -5,12 +5,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
+import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
+
+import javax.annotation.PostConstruct;
 
 @Profile("telegram")
 @Configuration
 public class TelegramConfiguration {
+
+
+    @PostConstruct
+    public void init(){
+        ApiContextInitializer.init();
+    }
 
     @Scope("singleton")
     @Bean

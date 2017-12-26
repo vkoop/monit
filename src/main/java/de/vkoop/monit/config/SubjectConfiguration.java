@@ -1,4 +1,4 @@
-package de.vkoop.monit.checks;
+package de.vkoop.monit.config;
 
 import com.codahale.metrics.health.HealthCheck;
 import io.reactivex.Observable;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Scope;
 
 @Slf4j
 @Configuration
-public class SubjectConfig {
+public class SubjectConfiguration {
 
     @Scope("singleton")
     @Bean

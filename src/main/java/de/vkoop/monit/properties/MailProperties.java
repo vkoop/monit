@@ -1,4 +1,4 @@
-package de.vkoop.monit.reporter;
+package de.vkoop.monit.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @EnableConfigurationProperties
 @ConfigurationProperties("mailconfig")
 public class MailProperties {
-    String fromMail;
+    public String fromMail;
     public String toEmail;
 }

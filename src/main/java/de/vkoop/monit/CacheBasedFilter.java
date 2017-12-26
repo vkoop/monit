@@ -11,34 +11,30 @@ import java.util.concurrent.TimeUnit;
 
 @Scope("prototype")
 @Component
-public class CacheBasedFilter<T> implements Filter<T> {
+public class CacheBasedFilter<T> implements StatefulFilter<T> {
 
     @Setter
     private Cache<T, T> cache;
 
     public CacheBasedFilter(@Value("${health.reportRate}") int expirationInHours) {
-        cache = CacheBuilder.newBuilder().expireAfterWrite(expirationInHours, TimeUnit.HOURS)
+        cache = CacheBuilder.newBuilder()
+                .expireAfterWrite(expirationInHours, TimeUnit.HOURS)
                 .build();
     }
 
     @Override
-    public boolean filter(T t) {
-        boolean isNew = cache.getIfPresent(t) == null;
-        if (isNew) {
-            cache.put(t, t);
-        }
-
-        return isNew;
+    public boolean isNewItem(T item) {
+        return cache.getIfPresent(item) == null;
     }
 
     @Override
-    public boolean restore(T t) {
-        T item = cache.getIfPresent(t);
-        if (item != null) {
-            cache.invalidate(t);
-            return true;
-        } else {
-            return false;
-        }
+    public void blockItem(T item) {
+        cache.put(item, item);
     }
+
+    @Override
+    public void unblockItem(T item){
+        cache.invalidate(item);
+    }
+
 }

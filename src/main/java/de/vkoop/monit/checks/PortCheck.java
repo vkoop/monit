@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.net.Socket;
 
+/**
+ * Health check to check if port is open and reachable.
+ */
 @RequiredArgsConstructor
 public class PortCheck extends NamedHealthCheck {
 

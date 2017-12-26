@@ -1,7 +1,7 @@
 package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
-import de.vkoop.monit.Filter;
+import de.vkoop.monit.StatefulFilter;
 import io.reactivex.Observable;
 import io.vavr.Tuple2;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     private String authToken;
 
     @Autowired
-    Filter<String> filterByName;
+    StatefulFilter<String> filterByName;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
@@ -51,7 +51,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     }
 
     @Override
-    public Filter<String> getFilter() {
+    public StatefulFilter<String> getFilter() {
         return filterByName;
     }
 
