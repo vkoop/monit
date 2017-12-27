@@ -1,9 +1,7 @@
 package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
-import de.vkoop.monit.filter.Filter;
 import de.vkoop.monit.filter.StatefulFilter;
-import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
 

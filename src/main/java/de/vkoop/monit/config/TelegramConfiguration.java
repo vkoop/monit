@@ -17,7 +17,7 @@ public class TelegramConfiguration {
 
 
     @PostConstruct
-    public void init(){
+    public void init() {
         ApiContextInitializer.init();
     }
 

@@ -35,7 +35,7 @@ public class CacheBasedFilter<T> implements StatefulFilter<T> {
     }
 
     @Override
-    public void unblockItem(T item){
+    public void unblockItem(T item) {
         cache.invalidate(item);
     }
 
