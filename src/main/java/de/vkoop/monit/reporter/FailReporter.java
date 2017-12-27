@@ -3,7 +3,7 @@ package de.vkoop.monit.reporter;
 import com.codahale.metrics.health.HealthCheck;
 import de.vkoop.monit.filter.Filter;
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.Scheduler;
 import io.vavr.Tuple2;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +25,9 @@ public interface FailReporter extends HealthReporter {
 
         getFailObservable()
                 .filter(tuple -> filter.canPass(tuple._1))
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(getScheduler())
                 .subscribe(this::reportSingle);
     }
+
+    Scheduler getScheduler();
 }

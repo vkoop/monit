@@ -2,7 +2,6 @@ package de.vkoop.monit.reporter;
 
 import com.codahale.metrics.health.HealthCheck;
 import de.vkoop.monit.filter.StatefulFilter;
-import io.reactivex.schedulers.Schedulers;
 import io.vavr.Tuple2;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +15,7 @@ public interface RestoreableFailReporter extends FailReporter {
     default void registerRestoreAction() {
         getObservable()
                 .filter(this::checkIfRestored)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(getScheduler())
                 .map(t -> t._1)
                 .subscribe(this::onRestore);
     }

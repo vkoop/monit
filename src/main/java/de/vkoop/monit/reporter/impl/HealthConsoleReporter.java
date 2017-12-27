@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import de.vkoop.monit.reporter.HealthReporter;
 import io.reactivex.Observable;
 import io.vavr.Tuple2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
+@Slf4j
 @Profile("console")
 @Component
 public class HealthConsoleReporter implements HealthReporter {
@@ -25,16 +27,16 @@ public class HealthConsoleReporter implements HealthReporter {
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
-        System.out.println(results);
+        log.info("Report all: %s", results);
     }
 
     @Override
     public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
-        System.out.println(resultTuple);
+        log.info("Report single: %s", resultTuple);
     }
 
     @Override
     public void onRestore(String key) {
-        System.out.println("Restored: " + key);
+        log.info("Report key: %s", key);
     }
 }

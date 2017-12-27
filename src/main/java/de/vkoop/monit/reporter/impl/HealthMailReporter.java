@@ -5,6 +5,7 @@ import de.vkoop.monit.filter.StatefulFilter;
 import de.vkoop.monit.properties.MailProperties;
 import de.vkoop.monit.reporter.RestoreableFailReporter;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.vavr.Tuple2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Map;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Profile("mail")
-@Component
+@Component("healthMailReporter")
 public class HealthMailReporter implements RestoreableFailReporter {
 
     private static final String DELIMITER = "\n";
@@ -36,6 +38,10 @@ public class HealthMailReporter implements RestoreableFailReporter {
 
     @Autowired
     StatefulFilter<String> alreadyReportedItemsFilter;
+
+    @Named("ioScheduler")
+    @Autowired
+    Scheduler ioScheduler;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
@@ -69,7 +75,7 @@ public class HealthMailReporter implements RestoreableFailReporter {
 
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            log.error("error occured while sending message", e);
         }
     }
 
@@ -81,5 +87,10 @@ public class HealthMailReporter implements RestoreableFailReporter {
     @Override
     public Observable<Tuple2<String, HealthCheck.Result>> getObservable() {
         return checkObservableHot;
+    }
+
+    @Override
+    public Scheduler getScheduler() {
+        return ioScheduler;
     }
 }

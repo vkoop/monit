@@ -4,7 +4,9 @@ import com.codahale.metrics.health.HealthCheck;
 import de.vkoop.monit.filter.StatefulFilter;
 import de.vkoop.monit.reporter.RestoreableFailReporter;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.vavr.Tuple2;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,13 +17,14 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Profile("telegram")
-@Component
+@Component("healthTelegramReporter")
 public class HealthTelegramReporter extends TelegramLongPollingBot implements RestoreableFailReporter {
 
     @Autowired
@@ -35,6 +38,11 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
 
     @Autowired
     StatefulFilter<String> alreadyReportedItemsFilter;
+
+    @Named("ioScheduler")
+    @Autowired
+    @Getter
+    Scheduler scheduler;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
@@ -104,4 +112,5 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
     @Override
     public void clearWebhook() {
     }
+
 }

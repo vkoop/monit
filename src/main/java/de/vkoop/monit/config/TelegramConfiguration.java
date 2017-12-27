@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class TelegramConfiguration {
 
-
     @PostConstruct
     public void init() {
         ApiContextInitializer.init();
@@ -23,9 +22,9 @@ public class TelegramConfiguration {
 
     @Scope("singleton")
     @Bean
-    public TelegramBotsApi getTelegramBotsApi(HealthTelegramReporter telegramReporter) throws TelegramApiRequestException {
+    public TelegramBotsApi getTelegramBotsApi(HealthTelegramReporter healthTelegramReporter) throws TelegramApiRequestException {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-        telegramBotsApi.registerBot(telegramReporter);
+        telegramBotsApi.registerBot(healthTelegramReporter);
 
         return telegramBotsApi;
     }
