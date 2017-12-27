@@ -1,6 +1,6 @@
-package de.vkoop.monit;
+package de.vkoop.monit.filter;
 
-public interface StatefulFilter<T> {
+public interface StatefulFilter<T> extends Filter<T>{
     /**
      * Check if the item is new.
      *
@@ -13,7 +13,8 @@ public interface StatefulFilter<T> {
 
     void unblockItem(T item);
 
-    default boolean blockAndCheckIfNew(T item){
+    @Override
+    default boolean canPass(T item){
         boolean isNewItem = isNewItem(item);
 
         if(isNewItem){

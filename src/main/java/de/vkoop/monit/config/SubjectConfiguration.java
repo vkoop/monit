@@ -24,10 +24,10 @@ public class SubjectConfiguration {
     @Scope("singleton")
     @Bean
     public Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot(Subject<Tuple2<String, HealthCheck.Result>> checkSubject) {
-        ConnectableObservable<Tuple2<String, HealthCheck.Result>> publish = checkSubject.publish();
-        publish.connect();
+        ConnectableObservable<Tuple2<String, HealthCheck.Result>> publishedObservable = checkSubject.publish();
+        publishedObservable.connect();
 
-        return publish;
+        return publishedObservable;
     }
 
 }

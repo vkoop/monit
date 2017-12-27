@@ -1,8 +1,9 @@
-package de.vkoop.monit.reporter;
+package de.vkoop.monit.reporter.impl;
 
 import com.codahale.metrics.health.HealthCheck;
-import de.vkoop.monit.StatefulFilter;
+import de.vkoop.monit.filter.StatefulFilter;
 import de.vkoop.monit.properties.MailProperties;
+import de.vkoop.monit.reporter.RestoreableFailReporter;
 import io.reactivex.Observable;
 import io.vavr.Tuple2;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Profile("mail")
 @Component
-public class HealthMailReporter implements HealthReporter, FilteredReporter, FailReporter {
+public class HealthMailReporter implements RestoreableFailReporter {
 
     private static final String DELIMITER = "\n";
 
@@ -34,7 +35,7 @@ public class HealthMailReporter implements HealthReporter, FilteredReporter, Fai
     Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
 
     @Autowired
-    StatefulFilter<String> filterByName;
+    StatefulFilter<String> alreadyReportedItemsFilter;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
@@ -74,7 +75,7 @@ public class HealthMailReporter implements HealthReporter, FilteredReporter, Fai
 
     @Override
     public StatefulFilter<String> getFilter() {
-        return filterByName;
+        return alreadyReportedItemsFilter;
     }
 
     @Override

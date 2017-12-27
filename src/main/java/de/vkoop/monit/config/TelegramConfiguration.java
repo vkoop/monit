@@ -1,6 +1,6 @@
 package de.vkoop.monit.config;
 
-import de.vkoop.monit.reporter.HealthTelegramReporter;
+import de.vkoop.monit.reporter.impl.HealthTelegramReporter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

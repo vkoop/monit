@@ -13,8 +13,6 @@ import org.telegram.telegrambots.ApiContextInitializer;
 public class MonitApplication {
 
     public static void main(String[] args) {
-
-
         SpringApplication.run(MonitApplication.class, args);
     }
 }

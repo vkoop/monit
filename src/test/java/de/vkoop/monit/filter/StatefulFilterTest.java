@@ -1,8 +1,7 @@
-package de.vkoop.monit;
+package de.vkoop.monit.filter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,10 +19,10 @@ public class StatefulFilterTest {
     @Test
     public void testBlockOnlyOnce() {
         String key = "key1";
-        boolean blocked = filter.blockAndCheckIfNew(key);
+        boolean blocked = filter.canPass(key);
         assertTrue(blocked);
 
-        boolean blockedSecondRequest = filter.blockAndCheckIfNew(key);
+        boolean blockedSecondRequest = filter.canPass(key);
         assertFalse(blockedSecondRequest);
     }
 

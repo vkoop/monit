@@ -5,6 +5,7 @@ import de.vkoop.monit.checks.NamedHealthCheck;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class HealthConfiguration {
         return healthChecks;
     }
 
+    @Singleton
     @Bean
     public HealthCheckRegistry getHealthCheckRegistry(List<NamedHealthCheck> allChecks) {
         for (NamedHealthCheck pingCheck : allChecks) {

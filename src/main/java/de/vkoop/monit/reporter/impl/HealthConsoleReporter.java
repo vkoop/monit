@@ -1,6 +1,7 @@
-package de.vkoop.monit.reporter;
+package de.vkoop.monit.reporter.impl;
 
 import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.reporter.HealthReporter;
 import io.reactivex.Observable;
 import io.vavr.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;

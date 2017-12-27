@@ -1,7 +1,8 @@
-package de.vkoop.monit.reporter;
+package de.vkoop.monit.reporter.impl;
 
 import com.codahale.metrics.health.HealthCheck;
-import de.vkoop.monit.StatefulFilter;
+import de.vkoop.monit.filter.StatefulFilter;
+import de.vkoop.monit.reporter.RestoreableFailReporter;
 import io.reactivex.Observable;
 import io.vavr.Tuple2;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Profile("telegram")
 @Component
-public class HealthTelegramReporter extends TelegramLongPollingBot implements HealthReporter, FilteredReporter, FailReporter {
+public class HealthTelegramReporter extends TelegramLongPollingBot implements RestoreableFailReporter {
 
     @Autowired
     Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
@@ -33,7 +34,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
     private String authToken;
 
     @Autowired
-    StatefulFilter<String> filterByName;
+    StatefulFilter<String> alreadyReportedItemsFilter;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
@@ -52,7 +53,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements He
 
     @Override
     public StatefulFilter<String> getFilter() {
-        return filterByName;
+        return alreadyReportedItemsFilter;
     }
 
     @Override

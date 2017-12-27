@@ -20,7 +20,7 @@ public class PingCheck extends NamedHealthCheck {
 
     @Override
     protected Result check() {
-        List<String> command = pingCommandStrategy.getCommandForIp(ip);
+        List<String> command = pingCommandStrategy.getPingCommand(ip);
 
         ProcessBuilder ping = new ProcessBuilder().command(command);
         try {
@@ -45,14 +45,14 @@ public class PingCheck extends NamedHealthCheck {
     }
 
     public interface PingCommandStrategy {
-        List<String> getCommandForIp(String ip);
+        List<String> getPingCommand(String ip);
     }
 
     @Profile("linux")
     @Component
     public static class LinuxPingStrategy implements PingCommandStrategy {
         @Override
-        public List<String> getCommandForIp(String ip) {
+        public List<String> getPingCommand(String ip) {
             return Arrays.asList("ping", "-c1", ip);
         }
     }
@@ -61,7 +61,7 @@ public class PingCheck extends NamedHealthCheck {
     @Component
     public static class WindowsPingStrategy implements PingCommandStrategy {
         @Override
-        public List<String> getCommandForIp(String ip) {
+        public List<String> getPingCommand(String ip) {
             return Arrays.asList("ping", "-n", "1", ip);
         }
     }

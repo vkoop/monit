@@ -1,4 +1,4 @@
-package de.vkoop.monit;
+package de.vkoop.monit.checks;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;

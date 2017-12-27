@@ -1,13 +1,15 @@
-package de.vkoop.monit;
+package de.vkoop.monit.filter.impl;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import de.vkoop.monit.filter.StatefulFilter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
+
 
 @Scope("prototype")
 @Component
