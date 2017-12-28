@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("mail,windows")
+@ActiveProfiles("test,mail,windows")
 @SpringBootTest
 @TestPropertySource(properties = {"spring.mail.host = localhost", "spring.mail.port: 3025"})
 public class HealthIntegrationTest {

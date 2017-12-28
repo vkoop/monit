@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,12 @@ public class PortCheckConfiguration {
 
     @Bean
     public List<NamedHealthCheck> portPingChecks(AppProperties hostConfig) {
-        return hostConfig.myhosts.stream()
+        List<AppProperties.MyConfigEntry> myhosts = hostConfig.myhosts;
+        if(myhosts == null){
+            return Collections.emptyList();
+        }
+
+        return myhosts.stream()
                 .filter(conf -> conf.port != 0)
                 .map(conf -> new PortCheck(conf.port, conf.ip, conf.name))
                 .collect(Collectors.toList());

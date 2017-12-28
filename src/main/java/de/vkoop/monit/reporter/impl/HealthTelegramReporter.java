@@ -28,21 +28,21 @@ import java.util.stream.Collectors;
 public class HealthTelegramReporter extends TelegramLongPollingBot implements RestoreableFailReporter {
 
     @Autowired
-    Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
+    private Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
 
     @Value("#{ '${telegram.recipients}'.split(',') }")
-    List<Long> recipients;
+    private List<Long> recipients;
 
     @Value("${telegram.authtoken}")
     private String authToken;
 
     @Autowired
-    StatefulFilter<String> alreadyReportedItemsFilter;
+    private StatefulFilter<String> alreadyReportedItemsFilter;
 
     @Named("ioScheduler")
     @Autowired
     @Getter
-    Scheduler scheduler;
+    private Scheduler scheduler;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
