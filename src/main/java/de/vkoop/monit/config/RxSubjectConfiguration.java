@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Scope;
 
 @Slf4j
 @Configuration
-public class SubjectConfiguration {
+public class RxSubjectConfiguration {
 
     @Scope("singleton")
     @Bean
