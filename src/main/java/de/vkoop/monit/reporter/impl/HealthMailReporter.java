@@ -28,20 +28,20 @@ public class HealthMailReporter implements RestoreableFailReporter {
     private static final String DELIMITER = "\n";
 
     @Autowired
-    JavaMailSender mailSender;
+    private JavaMailSender mailSender;
 
     @Autowired
-    MailProperties mailConfig;
+    private MailProperties mailConfig;
 
     @Autowired
-    Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
+    private Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
 
     @Autowired
-    StatefulFilter<String> alreadyReportedItemsFilter;
+    private StatefulFilter<String> alreadyReportedItemsFilter;
 
     @Named("ioScheduler")
     @Autowired
-    Scheduler ioScheduler;
+    private Scheduler ioScheduler;
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {

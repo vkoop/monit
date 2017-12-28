@@ -19,10 +19,10 @@ import java.util.SortedMap;
 public class HealthCheckExecutor {
 
     @Autowired
-    HealthCheckRegistry healthCheckRegistry;
+    private HealthCheckRegistry healthCheckRegistry;
 
     @Autowired
-    Subject<Tuple2<String, HealthCheck.Result>> checkSubject;
+    private Subject<Tuple2<String, HealthCheck.Result>> checkSubject;
 
     @Scheduled(fixedRateString = "${health.checkrate}")
     public void check() {

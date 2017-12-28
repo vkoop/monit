@@ -18,7 +18,7 @@ import java.util.Map;
 public class HealthConsoleReporter implements HealthReporter {
 
     @Autowired
-    Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
+    private Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
 
     @PostConstruct
     public void onInit() {
