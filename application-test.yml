@@ -1,0 +1,17 @@
+health:
+    checkrate: 5000
+    reportRate: 12
+mailconfig:
+    fromMail: test@localhost
+    toEmail: test@localhost
+management:
+    security:
+        enabled: false
+spring:
+    mail:
+        host: localhost
+        password: ''
+        username: ''
+telegram:
+    authtoken: FAKE_TOKEN
+    recipients: 1234
