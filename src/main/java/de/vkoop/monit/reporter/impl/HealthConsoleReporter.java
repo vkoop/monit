@@ -27,16 +27,16 @@ public class HealthConsoleReporter implements HealthReporter {
 
     @Override
     public void reportAll(Map<String, HealthCheck.Result> results) {
-        log.info("Report all: %s", results);
+        log.info("Report all: {}", results);
     }
 
     @Override
     public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
-        log.info("Report single: %s", resultTuple);
+        log.info("Report single: {}", resultTuple);
     }
 
     @Override
     public void onRestore(String key) {
-        log.info("Report key: %s", key);
+        log.info("Report key: {}", key);
     }
 }
