@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test,mail,windows")
+@ActiveProfiles("test,mail")
 @SpringBootTest
 public class HealthMailReporterTest {
 
@@ -36,7 +36,7 @@ public class HealthMailReporterTest {
     private ArgumentCaptor<Tuple2<String, HealthCheck.Result>> captor;
 
     @Test
-    public void test1() {
+    public void testReportSingle() {
         TestScheduler scheduler = (TestScheduler) reporter.getScheduler();
         scheduler.advanceTimeBy(1, TimeUnit.SECONDS);
         verify(reporter, times(1)).reportSingle(captor.capture());

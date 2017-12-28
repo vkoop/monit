@@ -1,7 +1,4 @@
 monit:
-  checkrate: 1000
-  reportRate: 24
-
   mailconfig:
     fromMail: test@localhost
     toEmail: test@localhost

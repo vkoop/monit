@@ -1,0 +1,7 @@
+monit:
+  checkrate: 1000
+  reportRate: 24
+
+management:
+  security:
+    enabled: false

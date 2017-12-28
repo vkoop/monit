@@ -34,7 +34,7 @@ public class HealthTelegramReporterTest {
     private ArgumentCaptor<Tuple2<String, HealthCheck.Result>> captor;
 
     @Test
-    public void test1() {
+    public void testReportSingle() {
         TestScheduler scheduler = (TestScheduler) reporter.getScheduler();
         scheduler.advanceTimeBy(1, TimeUnit.SECONDS);
         verify(reporter, times(1)).reportSingle(captor.capture());
