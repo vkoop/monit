@@ -1,0 +1,8 @@
+language: java
+
+env:
+  - SPRING_PROFILES_ACTIVE=test,linux
+  
+jdk:
+  - oraclejdk8
+  - openjdk8
