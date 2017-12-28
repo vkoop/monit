@@ -1,6 +1,7 @@
 package de.vkoop.monit.checks;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Health check to check if ip is reachable.
  */
+@Slf4j
 @RequiredArgsConstructor
 public class PingCheck extends NamedHealthCheck {
 
@@ -35,7 +37,9 @@ public class PingCheck extends NamedHealthCheck {
             }
 
         } catch (IOException | InterruptedException e) {
-            return Result.unhealthy(e);
+            String msg = "Ping failed with exception.";
+            log.error(msg, e);
+            return Result.unhealthy(msg);
         }
     }
 
