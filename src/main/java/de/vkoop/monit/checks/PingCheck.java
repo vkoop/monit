@@ -1,8 +1,10 @@
 package de.vkoop.monit.checks;
 
+import de.vkoop.monit.conditions.LinuxCondition;
+import de.vkoop.monit.conditions.WindowsCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -52,7 +54,7 @@ public class PingCheck extends NamedHealthCheck {
         List<String> getPingCommand(String ip);
     }
 
-    @Profile("linux")
+    @Conditional(LinuxCondition.class)
     @Component
     public static class LinuxPingStrategy implements PingCommandStrategy {
         @Override
@@ -61,7 +63,7 @@ public class PingCheck extends NamedHealthCheck {
         }
     }
 
-    @Profile("windows")
+    @Conditional(WindowsCondition.class)
     @Component
     public static class WindowsPingStrategy implements PingCommandStrategy {
         @Override
