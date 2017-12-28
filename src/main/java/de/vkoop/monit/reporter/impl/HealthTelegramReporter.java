@@ -30,10 +30,10 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
     @Autowired
     private Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
 
-    @Value("#{ '${telegram.recipients}'.split(',') }")
+    @Value("#{ '${monit.telegram.recipients}'.split(',') }")
     private List<Long> recipients;
 
-    @Value("${telegram.authtoken}")
+    @Value("${monit.telegram.authtoken}")
     private String authToken;
 
     @Autowired

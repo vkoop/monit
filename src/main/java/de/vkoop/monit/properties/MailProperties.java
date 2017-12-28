@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @EnableConfigurationProperties
-@ConfigurationProperties("mailconfig")
+@ConfigurationProperties("monit.mailconfig")
 public class MailProperties {
     public String fromMail;
     public String toEmail;

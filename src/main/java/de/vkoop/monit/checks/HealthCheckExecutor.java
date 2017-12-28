@@ -24,7 +24,7 @@ public class HealthCheckExecutor {
     @Autowired
     private Subject<Tuple2<String, HealthCheck.Result>> checkSubject;
 
-    @Scheduled(fixedRateString = "${health.checkrate}")
+    @Scheduled(fixedRateString = "${monit.checkrate}")
     public void check() {
         SortedMap<String, HealthCheck.Result> entries = healthCheckRegistry.runHealthChecks();
 

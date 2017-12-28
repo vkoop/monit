@@ -18,7 +18,7 @@ public class CacheBasedFilter<T> implements StatefulFilter<T> {
     @Setter
     private Cache<T, T> cache;
 
-    public CacheBasedFilter(@Value("${health.reportRate}") int expirationInHours) {
+    public CacheBasedFilter(@Value("${monit.reportRate}") int expirationInHours) {
         cache = CacheBuilder.newBuilder()
                 .expireAfterWrite(expirationInHours, TimeUnit.HOURS)
                 .build();

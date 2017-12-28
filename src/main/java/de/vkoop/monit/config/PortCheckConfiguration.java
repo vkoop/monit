@@ -17,7 +17,7 @@ public class PortCheckConfiguration {
 
     @Bean
     public List<NamedHealthCheck> portPingChecks(AppProperties hostConfig) {
-        List<AppProperties.MyConfigEntry> myhosts = hostConfig.myhosts;
+        List<AppProperties.CheckTargetProperties> myhosts = hostConfig.hosts;
         if (myhosts == null) {
             return Collections.emptyList();
         }

@@ -1,17 +1,21 @@
-health:
-    checkrate: 5000
-    reportRate: 12
-mailconfig:
+monit:
+  checkrate: 1000
+  reportRate: 24
+
+  mailconfig:
     fromMail: test@localhost
     toEmail: test@localhost
-management:
-    security:
-        enabled: false
-spring:
-    mail:
-        host: localhost
-        password: ''
-        username: ''
-telegram:
+
+  telegram:
     authtoken: FAKE_TOKEN
     recipients: 1234
+
+management:
+  security:
+    enabled: false
+
+spring:
+  mail:
+    host: localhost
+    password: ''
+    username: ''

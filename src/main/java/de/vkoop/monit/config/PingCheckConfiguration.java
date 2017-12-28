@@ -17,7 +17,7 @@ public class PingCheckConfiguration {
 
     @Bean
     public List<NamedHealthCheck> pingChecks(AppProperties hostConfig, PingCheck.PingCommandStrategy pingCommandStrategy) {
-        List<AppProperties.MyConfigEntry> myhosts = hostConfig.myhosts;
+        List<AppProperties.CheckTargetProperties> myhosts = hostConfig.hosts;
         if (myhosts == null) {
             return Collections.emptyList();
         }

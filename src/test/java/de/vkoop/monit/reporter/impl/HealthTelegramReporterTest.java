@@ -23,7 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test,mock-telegram,windows")
+@ActiveProfiles("test,mock-telegram")
 @SpringBootTest
 public class HealthTelegramReporterTest {
 
