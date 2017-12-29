@@ -1,6 +1,6 @@
 package de.vkoop.monit.reporter.impl;
 
-import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.checks.Result;
 import io.reactivex.schedulers.TestScheduler;
 import io.vavr.Tuple2;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class HealthTelegramReporterTest {
     private HealthTelegramReporter reporter;
 
     @Captor
-    private ArgumentCaptor<Tuple2<String, HealthCheck.Result>> captor;
+    private ArgumentCaptor<Tuple2<String, Result>> captor;
 
     @Test
     public void testReportSingle() {

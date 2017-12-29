@@ -7,6 +7,7 @@ import de.vkoop.monit.reporter.RestoreableFailReporter;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.vavr.Tuple2;
+import io.vavr.collection.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -17,8 +18,8 @@ import org.springframework.stereotype.Component;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Map;
 import java.util.stream.Collectors;
+
 
 @Slf4j
 @Profile("mail")
@@ -45,7 +46,7 @@ public class HealthMailReporter implements RestoreableFailReporter {
 
     @Override
     public void reportAll(Map<String, Result> results) {
-        String unhealthyEntries = results.entrySet().stream()
+        String unhealthyEntries = results
                 .map(Object::toString)
                 .collect(Collectors.joining(DELIMITER));
 

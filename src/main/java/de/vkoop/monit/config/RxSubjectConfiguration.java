@@ -1,6 +1,6 @@
 package de.vkoop.monit.config;
 
-import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.checks.Result;
 import io.reactivex.Observable;
 import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.subjects.PublishSubject;
@@ -17,14 +17,14 @@ public class RxSubjectConfiguration {
 
     @Scope("singleton")
     @Bean
-    public Subject<Tuple2<String, HealthCheck.Result>> checkSubject() {
+    public Subject<Tuple2<String, Result>> checkSubject() {
         return PublishSubject.create();
     }
 
     @Scope("singleton")
     @Bean
-    public Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot(Subject<Tuple2<String, HealthCheck.Result>> checkSubject) {
-        ConnectableObservable<Tuple2<String, HealthCheck.Result>> publishedObservable = checkSubject.publish();
+    public Observable<Tuple2<String, Result>> checkObservableHot(Subject<Tuple2<String, Result>> checkSubject) {
+        ConnectableObservable<Tuple2<String, Result>> publishedObservable = checkSubject.publish();
         publishedObservable.connect();
 
         return publishedObservable;

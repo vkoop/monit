@@ -1,6 +1,6 @@
 package de.vkoop.monit.reporter.impl;
 
-import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.checks.Result;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.TestScheduler;
@@ -18,9 +18,9 @@ public class ReporterIntegrationTestConfig {
     }
 
     @Bean
-    public Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot() {
-        Tuple2<String, HealthCheck.Result> healthy = Tuple.of("key1", HealthCheck.Result.healthy());
-        Tuple2<String, HealthCheck.Result> unhealthy = Tuple.of("key2", HealthCheck.Result.unhealthy("blub"));
+    public Observable<Tuple2<String, Result>> checkObservableHot() {
+        Tuple2<String, Result> healthy = Tuple.of("key1", Result.healthy());
+        Tuple2<String, Result> unhealthy = Tuple.of("key2", Result.unhealthy("blub"));
 
         return Observable.fromArray(healthy, unhealthy);
     }

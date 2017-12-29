@@ -4,13 +4,13 @@ import de.vkoop.monit.checks.Result;
 import de.vkoop.monit.reporter.HealthReporter;
 import io.reactivex.Observable;
 import io.vavr.Tuple2;
+import io.vavr.collection.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Map;
 
 @Slf4j
 @Profile("console")

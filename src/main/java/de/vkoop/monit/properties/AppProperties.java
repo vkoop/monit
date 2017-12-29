@@ -3,6 +3,7 @@ package de.vkoop.monit.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -11,11 +12,11 @@ public class AppProperties {
 
     public int checkrate = 5000;
     public int reportRate = 12;
-    public List<CheckTargetProperties> hosts;
+    public List<CheckTargetProperties> hosts = Collections.emptyList();
     public MailProperties mailconfig;
     public TelegramProperties telegram;
 
-    public List<WebsiteTestProperties> websiteTests;
+    public List<WebsiteTestProperties> websiteTests = Collections.emptyList();
 
     @Data
     public static class WebsiteTestProperties {

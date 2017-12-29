@@ -6,6 +6,7 @@ import de.vkoop.monit.reporter.RestoreableFailReporter;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.vavr.Tuple2;
+import io.vavr.collection.Map;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import javax.inject.Named;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,7 +30,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
     private Observable<Tuple2<String, Result>> checkObservableHot;
 
     @Value("#{ '${monit.telegram.recipients}'.split(',') }")
-    private List<Long> recipients;
+    private java.util.List<Long> recipients;
 
     @Value("${monit.telegram.authtoken}")
     private String authToken;
@@ -46,8 +45,8 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
 
     @Override
     public void reportAll(Map<String, Result> results) {
-        String collect = results.entrySet().stream()
-                .map(tuple -> tuple.getKey() + " unhealthy")
+        String collect = results
+                .map(tuple -> tuple._1() + " unhealthy")
                 .collect(Collectors.joining("\n"));
 
         sendMessageToAll(collect);

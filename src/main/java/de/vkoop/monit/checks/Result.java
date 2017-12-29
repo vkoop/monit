@@ -18,7 +18,7 @@ public abstract class Result {
     }
 
     public static Result unhealthy(String message, Throwable e) {
-        return new UnhealthyResult(message, e);
+        return UnhealthyResult.builder().message(message).exception(e).build();
     }
 
     public static Result unhealthy(String message, Object... args) {

@@ -3,8 +3,8 @@ package de.vkoop.monit.reporter;
 
 import de.vkoop.monit.checks.Result;
 import io.vavr.Tuple2;
+import io.vavr.collection.Map;
 
-import java.util.Map;
 
 /**
  * Report health issues to given channel.
