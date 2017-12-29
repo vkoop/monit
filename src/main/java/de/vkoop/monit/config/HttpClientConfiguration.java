@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class HttpClientConfiguration {
 
     @Bean
-    public HttpClient getHttpClient(){
+    public HttpClient getHttpClient() {
         return HttpClients.createDefault();
     }
 }

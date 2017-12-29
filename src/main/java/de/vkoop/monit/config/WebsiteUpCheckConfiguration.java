@@ -1,7 +1,7 @@
 package de.vkoop.monit.config;
 
 import de.vkoop.monit.checks.NamedHealthCheck;
-import de.vkoop.monit.checks.WebsiteUpTest;
+import de.vkoop.monit.checks.impl.WebsiteUpTest;
 import de.vkoop.monit.properties.AppProperties;
 import org.apache.http.client.HttpClient;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

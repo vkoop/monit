@@ -1,7 +1,7 @@
 package de.vkoop.monit.config;
 
 import de.vkoop.monit.checks.NamedHealthCheck;
-import de.vkoop.monit.checks.PortCheck;
+import de.vkoop.monit.checks.impl.PortCheck;
 import de.vkoop.monit.properties.AppProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

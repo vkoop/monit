@@ -1,5 +1,7 @@
-package de.vkoop.monit.checks;
+package de.vkoop.monit.checks.impl;
 
+import de.vkoop.monit.checks.NamedHealthCheck;
+import de.vkoop.monit.checks.Result;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -11,7 +13,7 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-public class WebsiteUpTest extends NamedHealthCheck {
+public class WebsiteUpTest implements NamedHealthCheck {
 
     public final String name;
     public final String url;
@@ -23,7 +25,7 @@ public class WebsiteUpTest extends NamedHealthCheck {
     }
 
     @Override
-    protected Result check() {
+    public Result check() {
         HttpGet httpGet = new HttpGet(url);
 
         try {

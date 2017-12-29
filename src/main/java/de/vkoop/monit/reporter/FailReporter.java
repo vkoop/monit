@@ -1,6 +1,6 @@
 package de.vkoop.monit.reporter;
 
-import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.checks.Result;
 import de.vkoop.monit.filter.Filter;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -12,9 +12,9 @@ public interface FailReporter extends HealthReporter {
 
     Filter<String> getFilter();
 
-    Observable<Tuple2<String, HealthCheck.Result>> getObservable();
+    Observable<Tuple2<String, Result>> getObservable();
 
-    default Observable<Tuple2<String, HealthCheck.Result>> getFailObservable() {
+    default Observable<Tuple2<String, Result>> getFailObservable() {
         return getObservable()
                 .filter(tuple -> !tuple._2.isHealthy());
     }

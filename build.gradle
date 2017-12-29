@@ -31,8 +31,6 @@ repositories {
 
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-mail'
-	compile "io.dropwizard.metrics:metrics-core:${dropwizardVersion}"
-	compile "io.dropwizard.metrics:metrics-healthchecks:${dropwizardVersion}"
 	compile "org.springframework.boot:spring-boot-configuration-processor"
 	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.6'
 	compile "org.telegram:telegrambots:3.5"

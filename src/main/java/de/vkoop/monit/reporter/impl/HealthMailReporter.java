@@ -1,6 +1,6 @@
 package de.vkoop.monit.reporter.impl;
 
-import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.checks.Result;
 import de.vkoop.monit.filter.StatefulFilter;
 import de.vkoop.monit.properties.MailProperties;
 import de.vkoop.monit.reporter.RestoreableFailReporter;
@@ -34,7 +34,7 @@ public class HealthMailReporter implements RestoreableFailReporter {
     private MailProperties mailConfig;
 
     @Autowired
-    private Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
+    private Observable<Tuple2<String, Result>> checkObservableHot;
 
     @Autowired
     private StatefulFilter<String> alreadyReportedItemsFilter;
@@ -44,7 +44,7 @@ public class HealthMailReporter implements RestoreableFailReporter {
     private Scheduler ioScheduler;
 
     @Override
-    public void reportAll(Map<String, HealthCheck.Result> results) {
+    public void reportAll(Map<String, Result> results) {
         String unhealthyEntries = results.entrySet().stream()
                 .map(Object::toString)
                 .collect(Collectors.joining(DELIMITER));
@@ -53,7 +53,7 @@ public class HealthMailReporter implements RestoreableFailReporter {
     }
 
     @Override
-    public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
+    public void reportSingle(Tuple2<String, Result> resultTuple) {
         log.debug("sending mail {}", resultTuple._1);
 
         sendMail(resultTuple.toString());
@@ -85,7 +85,7 @@ public class HealthMailReporter implements RestoreableFailReporter {
     }
 
     @Override
-    public Observable<Tuple2<String, HealthCheck.Result>> getObservable() {
+    public Observable<Tuple2<String, Result>> getObservable() {
         return checkObservableHot;
     }
 

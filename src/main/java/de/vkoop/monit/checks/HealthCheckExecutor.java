@@ -1,17 +1,14 @@
 package de.vkoop.monit.checks;
 
-import com.codahale.metrics.health.HealthCheck;
-import com.codahale.metrics.health.HealthCheckRegistry;
+
+import de.vkoop.monit.checks.result.HealthCheck;
 import io.reactivex.subjects.Subject;
-import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import io.vavr.collection.Map;
+import io.vavr.collection.Seq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.SortedMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Executes all health checks contained
@@ -21,18 +18,16 @@ import java.util.concurrent.Executors;
 public class HealthCheckExecutor {
 
     @Autowired
-    private HealthCheckRegistry healthCheckRegistry;
+    Map<String, HealthCheck> healthChecks;
 
     @Autowired
-    private Subject<Tuple2<String, HealthCheck.Result>> checkSubject;
+    private Subject<Tuple2<String, Result>> checkSubject;
 
     @Scheduled(fixedRateString = "${monit.checkrate}")
     public void check() {
-        SortedMap<String, HealthCheck.Result> entries = healthCheckRegistry.runHealthChecks();
+        Seq<Tuple2<String, Result>> results = healthChecks
+                .map(e -> e.map2(HealthCheck::check));
 
-        entries.forEach((key, value) -> {
-            Tuple2<String, HealthCheck.Result> tuple = Tuple.of(key, value);
-            checkSubject.onNext(tuple);
-        });
+        results.forEach(checkSubject::onNext);
     }
 }

@@ -1,6 +1,6 @@
 package de.vkoop.monit.reporter.impl;
 
-import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.checks.Result;
 import de.vkoop.monit.filter.StatefulFilter;
 import de.vkoop.monit.reporter.RestoreableFailReporter;
 import io.reactivex.Observable;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class HealthTelegramReporter extends TelegramLongPollingBot implements RestoreableFailReporter {
 
     @Autowired
-    private Observable<Tuple2<String, HealthCheck.Result>> checkObservableHot;
+    private Observable<Tuple2<String, Result>> checkObservableHot;
 
     @Value("#{ '${monit.telegram.recipients}'.split(',') }")
     private List<Long> recipients;
@@ -45,7 +45,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
     private Scheduler scheduler;
 
     @Override
-    public void reportAll(Map<String, HealthCheck.Result> results) {
+    public void reportAll(Map<String, Result> results) {
         String collect = results.entrySet().stream()
                 .map(tuple -> tuple.getKey() + " unhealthy")
                 .collect(Collectors.joining("\n"));
@@ -54,7 +54,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
     }
 
     @Override
-    public void reportSingle(Tuple2<String, HealthCheck.Result> resultTuple) {
+    public void reportSingle(Tuple2<String, Result> resultTuple) {
         String text = resultTuple.toString();
         sendMessageToAll(text);
     }
@@ -65,7 +65,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
     }
 
     @Override
-    public Observable<Tuple2<String, HealthCheck.Result>> getObservable() {
+    public Observable<Tuple2<String, Result>> getObservable() {
         return checkObservableHot;
     }
 

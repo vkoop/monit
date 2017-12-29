@@ -1,5 +1,7 @@
-package de.vkoop.monit.checks;
+package de.vkoop.monit.checks.impl;
 
+import de.vkoop.monit.checks.NamedHealthCheck;
+import de.vkoop.monit.checks.Result;
 import de.vkoop.monit.conditions.LinuxCondition;
 import de.vkoop.monit.conditions.WindowsCondition;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +18,14 @@ import java.util.List;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class PingCheck extends NamedHealthCheck {
+public class PingCheck implements NamedHealthCheck {
 
     private final String ip;
     private final PingCommandStrategy pingCommandStrategy;
     private final String name;
 
     @Override
-    protected Result check() {
+    public Result check() {
         List<String> command = pingCommandStrategy.getPingCommand(ip);
 
         ProcessBuilder ping = new ProcessBuilder().command(command);

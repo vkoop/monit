@@ -1,17 +1,14 @@
 package de.vkoop.monit.config;
 
-import com.codahale.metrics.health.HealthCheckRegistry;
 import de.vkoop.monit.checks.NamedHealthCheck;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 public class HealthConfiguration {
-    private HealthCheckRegistry healthCheckRegistry = new HealthCheckRegistry();
 
     @Bean
     public List<NamedHealthCheck> allChecks(List<NamedHealthCheck> pingChecks, List<NamedHealthCheck> portPingChecks, List<NamedHealthCheck> websiteChecks) {
@@ -23,13 +20,4 @@ public class HealthConfiguration {
         return healthChecks;
     }
 
-    @Singleton
-    @Bean
-    public HealthCheckRegistry getHealthCheckRegistry(List<NamedHealthCheck> allChecks) {
-        for (NamedHealthCheck pingCheck : allChecks) {
-            healthCheckRegistry.register(pingCheck.getName(), pingCheck);
-        }
-
-        return healthCheckRegistry;
-    }
 }

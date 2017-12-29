@@ -1,7 +1,7 @@
 package de.vkoop.monit.config;
 
 import de.vkoop.monit.checks.NamedHealthCheck;
-import de.vkoop.monit.checks.PingCheck;
+import de.vkoop.monit.checks.impl.PingCheck;
 import de.vkoop.monit.properties.AppProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

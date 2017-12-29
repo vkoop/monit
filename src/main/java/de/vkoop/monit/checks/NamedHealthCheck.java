@@ -1,11 +1,13 @@
 package de.vkoop.monit.checks;
 
-import com.codahale.metrics.health.HealthCheck;
+
+import de.vkoop.monit.checks.result.HealthCheck;
 
 /**
  * Health check with name.
  */
-public abstract class NamedHealthCheck extends HealthCheck {
+public interface NamedHealthCheck extends HealthCheck {
 
-    public abstract String getName();
+    String getName();
+
 }

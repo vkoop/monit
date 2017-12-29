@@ -1,6 +1,6 @@
 package de.vkoop.monit.reporter;
 
-import com.codahale.metrics.health.HealthCheck;
+import de.vkoop.monit.checks.Result;
 import de.vkoop.monit.filter.StatefulFilter;
 import io.vavr.Tuple2;
 
@@ -20,7 +20,7 @@ public interface RestoreableFailReporter extends FailReporter {
                 .subscribe(this::onRestore);
     }
 
-    default boolean checkIfRestored(Tuple2<String, HealthCheck.Result> tuple) {
+    default boolean checkIfRestored(Tuple2<String, Result> tuple) {
         boolean healthy = tuple._2.isHealthy();
         String name = tuple._1;
         return healthy && getFilter().restore(name);
