@@ -1,7 +1,7 @@
 package de.vkoop.monit.config;
 
 import de.vkoop.monit.checks.NamedHealthCheck;
-import de.vkoop.monit.checks.impl.WebsiteUpTest;
+import de.vkoop.monit.checks.impl.WebsiteUpCheck;
 import de.vkoop.monit.properties.AppProperties;
 import io.vavr.collection.List;
 import org.apache.http.client.HttpClient;
@@ -18,6 +18,6 @@ public class WebsiteUpCheckConfiguration {
     public List<NamedHealthCheck> websiteChecks(AppProperties hostConfig, HttpClient httpClient) {
         return List.ofAll(hostConfig.websiteTests)
                 .filter(conf -> !StringUtils.isEmpty(conf.url))
-                .map(conf -> new WebsiteUpTest(conf.name, conf.url, httpClient));
+                .map(conf -> new WebsiteUpCheck(conf.name, conf.url, httpClient));
     }
 }

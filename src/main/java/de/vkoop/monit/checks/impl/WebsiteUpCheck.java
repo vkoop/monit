@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-public class WebsiteUpTest implements NamedHealthCheck {
+public class WebsiteUpCheck implements NamedHealthCheck {
 
     public final String name;
     public final String url;
