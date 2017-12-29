@@ -1,6 +1,7 @@
 package de.vkoop.monit.reporter.impl;
 
 import de.vkoop.monit.checks.Result;
+import de.vkoop.monit.config.ReporterIntegrationTestConfig;
 import io.reactivex.schedulers.TestScheduler;
 import io.vavr.Tuple2;
 import org.junit.Test;

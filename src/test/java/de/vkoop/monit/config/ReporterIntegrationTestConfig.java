@@ -1,4 +1,4 @@
-package de.vkoop.monit.reporter.impl;
+package de.vkoop.monit.config;
 
 import de.vkoop.monit.checks.Result;
 import io.reactivex.Observable;

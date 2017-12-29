@@ -2,6 +2,7 @@ package de.vkoop.monit.reporter.impl;
 
 import com.icegreen.greenmail.junit.GreenMailRule;
 import com.icegreen.greenmail.util.ServerSetupTest;
+import de.vkoop.monit.config.ReporterIntegrationTestConfig;
 import io.reactivex.schedulers.TestScheduler;
 import org.junit.Rule;
 import org.junit.Test;
