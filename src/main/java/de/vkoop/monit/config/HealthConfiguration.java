@@ -14,10 +14,11 @@ public class HealthConfiguration {
     private HealthCheckRegistry healthCheckRegistry = new HealthCheckRegistry();
 
     @Bean
-    public List<NamedHealthCheck> allChecks(List<NamedHealthCheck> pingChecks, List<NamedHealthCheck> portPingChecks) {
+    public List<NamedHealthCheck> allChecks(List<NamedHealthCheck> pingChecks, List<NamedHealthCheck> portPingChecks, List<NamedHealthCheck> websiteChecks) {
         ArrayList<NamedHealthCheck> healthChecks = new ArrayList<>();
         healthChecks.addAll(pingChecks);
         healthChecks.addAll(portPingChecks);
+        healthChecks.addAll(websiteChecks);
 
         return healthChecks;
     }

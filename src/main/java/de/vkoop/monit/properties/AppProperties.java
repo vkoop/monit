@@ -15,6 +15,14 @@ public class AppProperties {
     public MailProperties mailconfig;
     public TelegramProperties telegram;
 
+    public List<WebsiteTestProperties> websiteTests;
+
+    @Data
+    public static class WebsiteTestProperties {
+        public String url;
+        public String name;
+    }
+
     @Data
     public static class CheckTargetProperties {
         public int port;
