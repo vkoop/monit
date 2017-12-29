@@ -1,7 +1,6 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.8.RELEASE'
-		dropwizardVersion = '3.2.5'
 	}
 	repositories {
 		mavenCentral()
