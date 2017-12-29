@@ -4,9 +4,11 @@ import de.vkoop.monit.checks.Result;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode
 @Builder
 public class UnhealthyResult extends Result {
 
