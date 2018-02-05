@@ -35,6 +35,9 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
     @Value("${monit.telegram.authtoken}")
     private String authToken;
 
+    @Value("${monit.telegram.botname}")
+    private String botname;
+
     @Autowired
     private StatefulFilter<String> alreadyReportedItemsFilter;
 
@@ -100,7 +103,7 @@ public class HealthTelegramReporter extends TelegramLongPollingBot implements Re
 
     @Override
     public String getBotUsername() {
-        return "efbmon_bot";
+        return botname;
     }
 
     @Override
