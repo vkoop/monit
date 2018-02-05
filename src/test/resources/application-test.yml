@@ -6,6 +6,7 @@ monit:
   telegram:
     authtoken: FAKE_TOKEN
     recipients: 1234
+    botname: test123
 
 management:
   security:
