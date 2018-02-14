@@ -12,8 +12,9 @@ buildscript {
 
 plugins {
 	id 'org.springframework.boot' version '1.5.10.RELEASE'
-	id 'io.franzbecker.gradle-lombok' version '1.11'
 	id 'java'
+
+	id 'net.ltgt.apt' version '0.10'
 }
 
 apply plugin: 'java'
@@ -29,6 +30,9 @@ repositories {
 }
 
 dependencies {
+	compileOnly 'org.projectlombok:lombok:1.16.20'
+	apt "org.projectlombok:lombok:1.16.20"
+
 	compile 'org.springframework.boot:spring-boot-starter-mail'
 	compile "org.springframework.boot:spring-boot-configuration-processor"
 	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.9'
@@ -36,7 +40,7 @@ dependencies {
 	compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.2.Final'
 	compile group: 'io.vavr', name: 'vavr', version: '0.9.2'
 
-	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 	testCompile group: 'com.icegreen', name: 'greenmail', version: '1.5.6'
 }
 
