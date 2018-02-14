@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.9.RELEASE'
+		springBootVersion = '1.5.10.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -11,7 +11,7 @@ buildscript {
 }
 
 plugins {
-	id 'org.springframework.boot' version '1.5.9.RELEASE'
+	id 'org.springframework.boot' version '1.5.10.RELEASE'
 	id 'io.franzbecker.gradle-lombok' version '1.11'
 	id 'java'
 }
