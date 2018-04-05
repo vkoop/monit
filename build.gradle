@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.10.RELEASE'
+		springBootVersion = '2.0.1.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -11,18 +11,16 @@ buildscript {
 }
 
 plugins {
-	id 'org.springframework.boot' version '1.5.10.RELEASE'
-	id 'java'
-
 	id 'net.ltgt.apt' version '0.10'
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'de.vkoop'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.3-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
@@ -30,17 +28,20 @@ repositories {
 }
 
 dependencies {
+	compile('org.springframework.boot:spring-boot-starter')
+
 	compileOnly 'org.projectlombok:lombok:1.16.20'
 	apt "org.projectlombok:lombok:1.16.20"
 
 	compile 'org.springframework.boot:spring-boot-starter-mail'
 	compile "org.springframework.boot:spring-boot-configuration-processor"
+	testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+
 	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.9'
 	compile "org.telegram:telegrambots:3.5"
 	compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.2.Final'
 	compile group: 'io.vavr', name: 'vavr', version: '0.9.2'
 
-	testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 	testCompile group: 'com.icegreen', name: 'greenmail', version: '1.5.6'
 }
 
