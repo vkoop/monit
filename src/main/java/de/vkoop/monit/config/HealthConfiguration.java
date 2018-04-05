@@ -8,18 +8,20 @@ import io.vavr.collection.Stream;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.function.Function;
+
 @Configuration
 public class HealthConfiguration {
 
     @Bean
     public List<NamedHealthCheck> allChecks(java.util.List<List<NamedHealthCheck>> allCheckLists) {
         return Stream.ofAll(allCheckLists)
-                .foldLeft(List.<NamedHealthCheck>empty(), List::prependAll);
+                .foldLeft(List.empty(), List::prependAll);
     }
 
     @Bean
     public Map<String, HealthCheck> healthChecks(List<NamedHealthCheck> allChecks) {
         return allChecks
-                .toMap(NamedHealthCheck::getName, check -> check);
+                .toMap(NamedHealthCheck::getName, Function.identity());
     }
 }
