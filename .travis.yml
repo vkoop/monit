@@ -2,9 +2,11 @@ language: java
 
 env:
   - SPRING_PROFILES_ACTIVE=test
-  
+
 jdk:
   - oraclejdk8
   - oraclejdk9
   - openjdk8
   - openjdk9
+  - openjdk10
+  - openjdk11
