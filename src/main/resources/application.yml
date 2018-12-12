@@ -5,3 +5,7 @@ monit:
 management:
   security:
     enabled: false
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
