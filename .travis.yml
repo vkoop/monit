@@ -4,5 +4,5 @@ env:
   - SPRING_PROFILES_ACTIVE=test
 
 jdk:
-  - oraclejdk8
   - openjdk8
+  - openjdk11
