@@ -35,8 +35,8 @@ group = "de.vkoop"
 version = "0.0.4-SNAPSHOT"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_12
-	targetCompatibility = JavaVersion.VERSION_12
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 tasks.withType<JavaCompile> {
