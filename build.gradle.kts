@@ -22,9 +22,9 @@ dependencies {
 	testCompile("org.springframework.boot:spring-boot-starter-test:$springVersion")
 
 	compile("io.reactivex.rxjava2:rxjava:2.2.7")
-	compile("org.telegram:telegrambots:4.1.2")
+	compile("org.telegram:telegrambots:4.3.1")
 	compile("org.hibernate:hibernate-validator:5.4.2.Final")
-	compile ("io.vavr:vavr:0.9.2")
+	compile ("io.vavr:vavr:0.10.0")
 
 	testCompile ("com.icegreen:greenmail:1.5.7")
 }
@@ -35,8 +35,8 @@ group = "de.vkoop"
 version = "0.0.4-SNAPSHOT"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_11
-	targetCompatibility = JavaVersion.VERSION_11
+	sourceCompatibility = JavaVersion.VERSION_12
+	targetCompatibility = JavaVersion.VERSION_12
 }
 
 tasks.withType<JavaCompile> {
