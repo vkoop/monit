@@ -26,7 +26,7 @@ dependencies {
 	compile("org.hibernate:hibernate-validator:5.4.2.Final")
 	compile ("io.vavr:vavr:0.10.0")
 
-	testCompile ("com.icegreen:greenmail:1.5.7")
+	testCompile ("com.icegreen:greenmail:1.5.10")
 }
 
 //compileJava.dependsOn(processResources)
