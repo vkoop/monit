@@ -4,6 +4,7 @@ import de.vkoop.monit.checks.NamedHealthCheck;
 import de.vkoop.monit.checks.Result;
 import lombok.RequiredArgsConstructor;
 
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -18,12 +19,16 @@ public class PortCheck implements NamedHealthCheck {
 
     @Override
     public Result check() {
-        try (Socket socket = new Socket(host, port);
+        try (Socket ignored = createSocket();
         ) {
             return Result.healthy();
         } catch (Exception e) {
             return Result.unhealthy(e);
         }
+    }
+
+    Socket createSocket() throws IOException {
+        return new Socket(host, port);
     }
 
     @Override
