@@ -28,9 +28,8 @@ public class PingCheck implements NamedHealthCheck {
     public Result check() {
         List<String> command = pingCommandStrategy.getPingCommand(ip);
 
-        ProcessBuilder ping = new ProcessBuilder().command(command);
         try {
-            Process start = ping.start();
+            Process start = createProcessBuilder(command);
             start.waitFor();
             int returnValue = start.exitValue();
 
@@ -40,11 +39,15 @@ public class PingCheck implements NamedHealthCheck {
                 return Result.unhealthy("Invalid ping");
             }
 
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             String msg = "Ping failed with exception.";
             log.error(msg, e);
             return Result.unhealthy(msg);
         }
+    }
+
+    Process createProcessBuilder(List<String> arguments) throws IOException {
+        return new ProcessBuilder(arguments).start();
     }
 
     @Override
