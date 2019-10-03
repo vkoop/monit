@@ -24,7 +24,7 @@ dependencies {
 	compile("io.reactivex.rxjava2:rxjava:2.2.10")
 	compile("org.telegram:telegrambots:4.3.1")
 	compile("org.hibernate:hibernate-validator:5.4.2.Final")
-	compile ("io.vavr:vavr:0.10.0")
+	compile ("io.vavr:vavr:0.10.2")
 
 	testCompile ("com.icegreen:greenmail:1.5.10")
 }
