@@ -1,6 +1,6 @@
 plugins {
 	java
-	id("org.springframework.boot") version "2.1.8.RELEASE"
+	id("org.springframework.boot") version "2.2.2.RELEASE"
 }
 
 repositories {
@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
 	val lombokVersion ="1.18.10"
-	val springVersion ="2.1.8.RELEASE"
+	val springVersion ="2.2.2.RELEASE"
 
 	compile("org.springframework.boot:spring-boot-starter")
 
