@@ -1,8 +1,8 @@
 plugins {
     java
 
-    id("com.google.cloud.tools.jib") version "1.8.0"
-    id("org.springframework.boot") version "2.2.4.RELEASE"
+    id("com.google.cloud.tools.jib") version "2.1.0"
+    id("org.springframework.boot") version "2.2.5.RELEASE"
 }
 
 repositories {
@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     val lombokVersion = "1.18.10"
-    val springVersion = "2.2.4.RELEASE"
+    val springVersion = "2.2.5.RELEASE"
 
     implementation("org.springframework.boot:spring-boot-starter")
 
