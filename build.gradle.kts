@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    val lombokVersion = "1.18.10"
+    val lombokVersion = "1.18.12"
     val springVersion = "2.2.5.RELEASE"
 
     implementation("org.springframework.boot:spring-boot-starter")
