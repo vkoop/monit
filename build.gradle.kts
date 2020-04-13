@@ -2,7 +2,7 @@ plugins {
     java
 
     id("com.google.cloud.tools.jib") version "2.1.0"
-    id("org.springframework.boot") version "2.2.5.RELEASE"
+    id("org.springframework.boot") version "2.2.6.RELEASE"
 }
 
 repositories {
@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     val lombokVersion = "1.18.12"
-    val springVersion = "2.2.5.RELEASE"
+    val springVersion = "2.2.6.RELEASE"
 
     implementation("org.springframework.boot:spring-boot-starter")
 
@@ -35,8 +35,8 @@ group = "de.vkoop"
 version = "0.0.6-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_13
+    targetCompatibility = JavaVersion.VERSION_13
 }
 
 tasks.withType<JavaCompile> {
