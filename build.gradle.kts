@@ -17,8 +17,8 @@ repositories {
 sonarqube {
     properties {
         property("sonar.projectKey", "vkoop_monit")
-        property ("sonar.organization", "vkoop")
-        property ("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.organization", "vkoop")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
 
