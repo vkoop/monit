@@ -50,13 +50,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-
-tasks.withType<Test> {
-    systemProperty("spring.profiles.active", "test")
-}
-
-
-
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
