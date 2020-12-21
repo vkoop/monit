@@ -1,7 +1,0 @@
-language: java
-
-env:
-  - SPRING_PROFILES_ACTIVE=test
-
-jdk:
-  - openjdk11
