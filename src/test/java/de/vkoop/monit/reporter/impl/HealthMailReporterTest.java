@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test,mail")
+@ActiveProfiles(profiles = {"test", "mail"})
 @SpringBootTest
 public class HealthMailReporterTest {
 
