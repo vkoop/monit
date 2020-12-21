@@ -6,11 +6,20 @@ plugins {
 
     id("com.github.ben-manes.versions") version "0.28.0"
 
+    id("org.sonarqube") version "3.0"
 }
 
 repositories {
     mavenCentral()
     jcenter()
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "vkoop_monit")
+        property ("sonar.organization", "vkoop")
+        property ("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 dependencies {
