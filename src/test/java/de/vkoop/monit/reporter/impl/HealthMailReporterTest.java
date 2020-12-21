@@ -48,10 +48,6 @@ public class HealthMailReporterTest {
     @Import(ReporterIntegrationTestConfig.class)
     @TestConfiguration
     public static class MyTestConfiguration {
-        @Bean("testHealthMailReporter")
-        HealthMailReporter getReporter(HealthMailReporter healthMailReporter) {
-            return Mockito.spy(healthMailReporter);
-        }
 
         @Primary
         @Bean
@@ -60,5 +56,12 @@ public class HealthMailReporterTest {
             when(mailSenderMock.createMimeMessage()).thenReturn(mock(MimeMessage.class));
             return mailSenderMock;
         }
+
+        @Bean("testHealthMailReporter")
+        HealthMailReporter getReporter(HealthMailReporter healthMailReporter) {
+            return Mockito.spy(healthMailReporter);
+        }
+
+
     }
 }
