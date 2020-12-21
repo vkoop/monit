@@ -2,7 +2,7 @@ plugins {
     java
 
     id("com.google.cloud.tools.jib") version "2.7.0"
-    id("org.springframework.boot") version "2.2.2.RELEASE"
+    id("org.springframework.boot") version "2.3.7.RELEASE"
     id("com.github.ben-manes.versions") version "0.28.0"
 
     id("org.sonarqube") version "3.0"
@@ -23,7 +23,7 @@ sonarqube {
 
 dependencies {
     val lombokVersion = "1.18.16"
-    val springVersion = "2.2.2.RELEASE"
+    val springVersion = "2.3.7.RELEASE"
 
     implementation("org.springframework.boot:spring-boot-starter")
 
@@ -49,13 +49,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
-
-
-tasks.withType<Test> {
-    systemProperty("spring.profiles.active", "test")
-}
-
-
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
