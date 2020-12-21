@@ -51,9 +51,9 @@ java {
 }
 
 
-/*tasks.withType<Test> {
+tasks.withType<Test> {
     systemProperty("spring.profiles.active", "test")
-}*/
+}
 
 
 
